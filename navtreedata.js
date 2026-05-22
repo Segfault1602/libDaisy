@@ -47,7 +47,7 @@ var NAVTREE =
       [ "Hello World", "md_doc_2md_2__a2___getting-_started-_serial-_printing.html#autotoc_md14", null ],
       [ "String Formatting", "md_doc_2md_2__a2___getting-_started-_serial-_printing.html#autotoc_md15", null ],
       [ "Floating Point Numbers", "md_doc_2md_2__a2___getting-_started-_serial-_printing.html#autotoc_md16", [
-        [ "Using %f specifier", "md_doc_2md_2__a2___getting-_started-_serial-_printing.html#autotoc_md17", null ],
+        [ "Using f specifier", "md_doc_2md_2__a2___getting-_started-_serial-_printing.html#autotoc_md17", null ],
         [ "Using FLT_FMT and FLT_VAR macros", "md_doc_2md_2__a2___getting-_started-_serial-_printing.html#autotoc_md18", null ],
         [ "Using FixedCapStr class", "md_doc_2md_2__a2___getting-_started-_serial-_printing.html#autotoc_md19", null ]
       ] ],
@@ -143,8 +143,6 @@ var NAVTREE =
         [ "All", "globals.html", "globals_dup" ],
         [ "Functions", "globals_func.html", null ],
         [ "Variables", "globals_vars.html", null ],
-        [ "Enumerations", "globals_enum.html", null ],
-        [ "Enumerator", "globals_eval.html", null ],
         [ "Macros", "globals_defs.html", "globals_defs" ]
       ] ]
     ] ]
@@ -154,12 +152,13 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_abstract_menu_8h.html",
-"classdaisy_1_1_fixed_cap_str_base.html#a688c94fe6ed65f138675b9b2168a1d5d",
-"classdaisy_1_1_sai_handle.html#aac337760cd0a689081208684d3771615",
-"dir_220d2bd384b446346a1cdcf02b1b2295.html",
-"globals_g.html",
-"md_doc_2md_2__b1___development-_unit-_testing.html#autotoc_md64",
-"structdaisy_1_1_sai_handle_1_1_config.html#adace22abaff171f0c459cff4a44026fcabe2da78731d2386be1e8ace72a568eee"
+"classdaisy_1_1_f_i_f_o_base.html#af648b72bde5a8beda3d360862f4ec54b",
+"classdaisy_1_1_persistent_storage.html",
+"classdaisy_1_1_wav_player.html#a98ca7cf8796e5c647cd392bf79f60046",
+"ffconf_8h.html#adff028cbd80032c637fe1bb4e9b6fdfd",
+"icm20948_8h.html#ac9ff5cb907dc948fcb30ed233b07a5fa",
+"oled__fonts_8h.html#acd5a968545c0bd71b20fa678de249e0e",
+"structdaisy_1_1_timer_handle_1_1_config.html#a0dd9b7de7144428da36ab1e140081e7bafbaedde498cdead4f2780217646e9ba1"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
