@@ -1,11 +1,20 @@
 var annotated_dup =
 [
     [ "daisy", "namespacedaisy.html", [
+      [ "desktop_devkit", "namespacedaisy_1_1desktop__devkit.html", [
+        [ "Hardware", "classdaisy_1_1desktop__devkit_1_1_hardware.html", "classdaisy_1_1desktop__devkit_1_1_hardware" ]
+      ] ],
+      [ "eurorack_devkit", "namespacedaisy_1_1eurorack__devkit.html", [
+        [ "Hardware", "classdaisy_1_1eurorack__devkit_1_1_hardware.html", "classdaisy_1_1eurorack__devkit_1_1_hardware" ]
+      ] ],
       [ "MAX11300Types", "namespacedaisy_1_1_m_a_x11300_types.html", [
         [ "DmaBuffer", "structdaisy_1_1_m_a_x11300_types_1_1_dma_buffer.html", "structdaisy_1_1_m_a_x11300_types_1_1_dma_buffer" ]
       ] ],
       [ "patch_sm", "namespacedaisy_1_1patch__sm.html", [
         [ "DaisyPatchSM", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m.html", "classdaisy_1_1patch__sm_1_1_daisy_patch_s_m" ]
+      ] ],
+      [ "pedal_devkit", "namespacedaisy_1_1pedal__devkit.html", [
+        [ "Hardware", "classdaisy_1_1pedal__devkit_1_1_hardware.html", "classdaisy_1_1pedal__devkit_1_1_hardware" ]
       ] ],
       [ "AbstractMenu", "classdaisy_1_1_abstract_menu.html", "classdaisy_1_1_abstract_menu" ],
       [ "AdcChannelConfig", "structdaisy_1_1_adc_channel_config.html", "structdaisy_1_1_adc_channel_config" ],
@@ -33,6 +42,7 @@ var annotated_dup =
       [ "DaisyPod", "classdaisy_1_1_daisy_pod.html", "classdaisy_1_1_daisy_pod" ],
       [ "DaisySeed", "classdaisy_1_1_daisy_seed.html", "classdaisy_1_1_daisy_seed" ],
       [ "DaisyVersio", "classdaisy_1_1_daisy_versio.html", "classdaisy_1_1_daisy_versio" ],
+      [ "DigitalControl", "structdaisy_1_1_digital_control.html", "structdaisy_1_1_digital_control" ],
       [ "DotStar", "classdaisy_1_1_dot_star.html", "classdaisy_1_1_dot_star" ],
       [ "DotStarSpiTransport", "classdaisy_1_1_dot_star_spi_transport.html", "classdaisy_1_1_dot_star_spi_transport" ],
       [ "Dps310", "classdaisy_1_1_dps310.html", "classdaisy_1_1_dps310" ],
@@ -64,6 +74,7 @@ var annotated_dup =
       [ "LoggerImpl< LOGGER_EXTERNAL >", "classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___e_x_t_e_r_n_a_l_01_4.html", null ],
       [ "LoggerImpl< LOGGER_INTERNAL >", "classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___i_n_t_e_r_n_a_l_01_4.html", null ],
       [ "LoggerImpl< LOGGER_SEMIHOST >", "classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___s_e_m_i_h_o_s_t_01_4.html", null ],
+      [ "LoggerImpl< LOGGER_UART >", "classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___u_a_r_t_01_4.html", "classdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___u_a_r_t_01_4" ],
       [ "MappedFloatValue", "classdaisy_1_1_mapped_float_value.html", "classdaisy_1_1_mapped_float_value" ],
       [ "MappedIntValue", "classdaisy_1_1_mapped_int_value.html", "classdaisy_1_1_mapped_int_value" ],
       [ "MappedStringListValue", "classdaisy_1_1_mapped_string_list_value.html", "classdaisy_1_1_mapped_string_list_value" ],
@@ -136,6 +147,7 @@ var annotated_dup =
       [ "Switch3", "classdaisy_1_1_switch3.html", "classdaisy_1_1_switch3" ],
       [ "System", "classdaisy_1_1_system.html", "classdaisy_1_1_system" ],
       [ "SystemExclusiveEvent", "structdaisy_1_1_system_exclusive_event.html", "structdaisy_1_1_system_exclusive_event" ],
+      [ "Tca9534", "classdaisy_1_1_tca9534.html", "classdaisy_1_1_tca9534" ],
       [ "TimerHandle", "classdaisy_1_1_timer_handle.html", "classdaisy_1_1_timer_handle" ],
       [ "Tlv493d", "classdaisy_1_1_tlv493d.html", "classdaisy_1_1_tlv493d" ],
       [ "Tlv493dI2CTransport", "classdaisy_1_1_tlv493d_i2_c_transport.html", "classdaisy_1_1_tlv493d_i2_c_transport" ],

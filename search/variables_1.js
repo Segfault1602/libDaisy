@@ -13,7 +13,7 @@ var searchData=
   ['b_5fdir_10',['b_dir',['../structdaisy_1_1_sai_handle_1_1_config.html#a39845c4ac5a8044cc2afeaa90d2b747a',1,'daisy::SaiHandle::Config']]],
   ['b_5fsync_11',['b_sync',['../structdaisy_1_1_sai_handle_1_1_config.html#ae94551a85d97c784e3849cc287b02603',1,'daisy::SaiHandle::Config']]],
   ['baud_5fprescaler_12',['baud_prescaler',['../structdaisy_1_1_dot_star_spi_transport_1_1_config.html#a63d9f5d554bbf1e3875a235ee769d6b8',1,'daisy::DotStarSpiTransport::Config::baud_prescaler'],['../structdaisy_1_1_m_a_x11300_multi_slave_spi_transport_1_1_config.html#ac58a936f12dfdfb850d19b30a3d75e54',1,'daisy::MAX11300MultiSlaveSpiTransport::Config::baud_prescaler'],['../structdaisy_1_1_spi_handle_1_1_config.html#aafe290af675fa8107f3692353e2f60b1',1,'daisy::SpiHandle::Config::baud_prescaler'],['../structdaisy_1_1_multi_slave_spi_handle_1_1_config.html#a8ccc9763b9159538697038c359f854b1',1,'daisy::MultiSlaveSpiHandle::Config::baud_prescaler']]],
-  ['baudrate_13',['baudrate',['../structdaisy_1_1_uart_handler_1_1_config.html#aaa158f6471d11b79c9873215bac76df7',1,'daisy::UartHandler::Config']]],
+  ['baudrate_13',['baudrate',['../structdaisy_1_1_logger_impl_3_01_l_o_g_g_e_r___u_a_r_t_01_4_1_1_config.html#a8d74ce1fd5a50c81d6bcb637b0f56e81',1,'daisy::LoggerImpl&lt; LOGGER_UART &gt;::Config::baudrate'],['../structdaisy_1_1_uart_handler_1_1_config.html#aaa158f6471d11b79c9873215bac76df7',1,'daisy::UartHandler::Config::baudrate']]],
   ['begun_14',['begun',['../classdaisy_1_1_neo_pixel.html#a3ef27df2c5db0805b8da5a96ace14394',1,'daisy::NeoPixel']]],
   ['bg_5fcolor_5f_15',['bg_color_',['../classdaisy_1_1_s_s_d1351_driver.html#a2d2ec21f969b3920077fec251b52f2d9',1,'daisy::SSD1351Driver']]],
   ['bit_16',['bit',['../uniondaisy_1_1_neo_trellis_1_1key_event_raw.html#af9ce51a13b9dc999abb73fb98c43f5f7',1,'daisy::NeoTrellis::keyEventRaw::bit'],['../uniondaisy_1_1_neo_trellis_1_1key_event.html#ae6f6b283b6ef4a29e5a57e772d53faab',1,'daisy::NeoTrellis::keyEvent::bit'],['../uniondaisy_1_1_neo_trellis_1_1key_state.html#a185201f539d871e30b2ceafee50b87f1',1,'daisy::NeoTrellis::keyState::bit']]],
@@ -33,10 +33,12 @@ var searchData=
   ['brightness_30',['brightness',['../classdaisy_1_1_neo_pixel.html#a2a07973ed7af8eff8ee9031d6daeae14',1,'daisy::NeoPixel']]],
   ['buff_5fstate_31',['buff_state',['../structdaisy_1_1_dac_handle_1_1_config.html#a75421caa8aebd5413f89654a58e39d31',1,'daisy::DacHandle::Config']]],
   ['buffer_5f_32',['buffer_',['../classdaisy_1_1_s_s_d130x_driver.html#af4d2d593d4667747b0df6f698c1048d5',1,'daisy::SSD130xDriver::buffer_'],['../classdaisy_1_1_s_s_d1327_driver.html#a47740d1d7e3fd0e83cc5de7804f1a99f',1,'daisy::SSD1327Driver::buffer_'],['../classdaisy_1_1_s_s_d1351_driver.html#abd04370a71af0b8316f4491e9ba42d7d',1,'daisy::SSD1351Driver::buffer_'],['../classdaisy_1_1_fixed_cap_str_base.html#a60eb2c784956d413f50b0f468879d49f',1,'daisy::FixedCapStrBase::buffer_']]],
-  ['button1_33',['button1',['../classdaisy_1_1_daisy_pod.html#a9e2edc159de61e03b99fa5cf0d91f79e',1,'daisy::DaisyPod']]],
-  ['button2_34',['button2',['../classdaisy_1_1_daisy_pod.html#ac4a6df2ec7c2675f769d231e036231b9',1,'daisy::DaisyPod']]],
-  ['buttons_35',['buttons',['../classdaisy_1_1_daisy_pod.html#adc40296adf43258c9ac99bcf45a3554e',1,'daisy::DaisyPod']]],
-  ['byteadress_36',['byteAdress',['../structdaisy_1_1_tlv493d_1_1_reg_mask__t.html#a976311fa433c43525bf9cf9b3d9b028f',1,'daisy::Tlv493d::RegMask_t']]],
-  ['byterate_37',['ByteRate',['../structdaisy_1_1_w_a_v___format_type_def.html#a62021d1850a14721086b0cb35a75ff1e',1,'daisy::WAV_FormatTypeDef']]],
-  ['byterate_38',['byteRate',['../structdaisy_1_1_wav_format_info.html#a56d0ba8bb7ce7a34cd2fd98b9a6e1d95',1,'daisy::WavFormatInfo']]]
+  ['button_33',['button',['../classdaisy_1_1desktop__devkit_1_1_hardware.html#a624e6501ac0eb83e77ee2faf1438b9b3',1,'daisy::desktop_devkit::Hardware']]],
+  ['button1_34',['button1',['../classdaisy_1_1_daisy_pod.html#a9e2edc159de61e03b99fa5cf0d91f79e',1,'daisy::DaisyPod']]],
+  ['button2_35',['button2',['../classdaisy_1_1_daisy_pod.html#ac4a6df2ec7c2675f769d231e036231b9',1,'daisy::DaisyPod']]],
+  ['button_5fsr_36',['button_sr',['../classdaisy_1_1desktop__devkit_1_1_hardware.html#aadc61b975b39eb9ab6efa57ced6ae91c',1,'daisy::desktop_devkit::Hardware']]],
+  ['buttons_37',['buttons',['../classdaisy_1_1_daisy_pod.html#adc40296adf43258c9ac99bcf45a3554e',1,'daisy::DaisyPod']]],
+  ['byteadress_38',['byteAdress',['../structdaisy_1_1_tlv493d_1_1_reg_mask__t.html#a976311fa433c43525bf9cf9b3d9b028f',1,'daisy::Tlv493d::RegMask_t']]],
+  ['byterate_39',['ByteRate',['../structdaisy_1_1_w_a_v___format_type_def.html#a62021d1850a14721086b0cb35a75ff1e',1,'daisy::WAV_FormatTypeDef']]],
+  ['byterate_40',['byteRate',['../structdaisy_1_1_wav_format_info.html#a56d0ba8bb7ce7a34cd2fd98b9a6e1d95',1,'daisy::WavFormatInfo']]]
 ];
