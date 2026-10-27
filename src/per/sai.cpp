@@ -1,5 +1,7 @@
 #include "per/sai.h"
 #include "daisy_core.h"
+#include "per/irq_observer_dma.h"
+#include "util/irq_observer.h"
 
 namespace daisy
 {
@@ -65,7 +67,29 @@ static void Error_Handler()
 // Static References for available SaiHandle::Impls
 // ================================================================
 
-static SaiHandle::Impl sai_handles[2];
+static SaiHandle::Impl     sai_handles[2];
+static detail::IrqObserver sai1_irq_observer;
+
+static IrqEvent CaptureSai1Irq(bool block_a)
+{
+    const auto& sai = sai_handles[0];
+    IrqEvent    event{};
+    event.peripheral = 1;
+    event.dma        = detail::ReadDmaIrqSnapshot(
+        block_a ? DMA1_Stream0 : DMA1_Stream1,
+        block_a ? sai.sai_a_handle_.XferSize : sai.sai_b_handle_.XferSize);
+    const bool a_tx
+        = sai.config_.a_dir == SaiHandle::Config::Direction::TRANSMIT;
+    const bool b_tx
+        = sai.config_.b_dir == SaiHandle::Config::Direction::TRANSMIT;
+    if(a_tx != b_tx)
+    {
+        event.output_dma = detail::ReadDmaIrqSnapshot(
+            a_tx ? DMA1_Stream0 : DMA1_Stream1,
+            a_tx ? sai.sai_a_handle_.XferSize : sai.sai_b_handle_.XferSize);
+    }
+    return event;
+}
 
 // ================================================================
 // SAI Functions
@@ -506,12 +530,18 @@ extern "C" void HAL_SAI_MspDeInit(SAI_HandleTypeDef* hsai)
 
 extern "C" void DMA1_Stream0_IRQHandler(void)
 {
-    HAL_DMA_IRQHandler(&sai_handles[0].sai_a_dma_handle_);
+    sai1_irq_observer.Observe(
+        IrqId::SAI1_DMA_A,
+        [] { return CaptureSai1Irq(true); },
+        [] { HAL_DMA_IRQHandler(&sai_handles[0].sai_a_dma_handle_); });
 }
 
 extern "C" void DMA1_Stream1_IRQHandler(void)
 {
-    HAL_DMA_IRQHandler(&sai_handles[0].sai_b_dma_handle_);
+    sai1_irq_observer.Observe(
+        IrqId::SAI1_DMA_B,
+        [] { return CaptureSai1Irq(false); },
+        [] { HAL_DMA_IRQHandler(&sai_handles[0].sai_b_dma_handle_); });
 }
 
 extern "C" void DMA1_Stream3_IRQHandler(void)
@@ -555,6 +585,9 @@ extern "C" void HAL_SAI_RxCpltCallback(SAI_HandleTypeDef* hsai)
 // ================================================================
 // SaiHandle -> SaiHandle::Pimpl
 // ================================================================
+
+void SaiHandle::SetIrqObserver(IrqObserverCallback callback, void* context)
+{ sai1_irq_observer.Set(callback, context); }
 
 SaiHandle::Result SaiHandle::Init(const Config& config)
 {

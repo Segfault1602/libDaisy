@@ -174,3 +174,81 @@ for(uint8_t i = 0; i < 4; i++)
 // transmit and receive
 spi_handle.DmaTransmitAndReceive(tx_buffer, rx_buffer, 4, NULL, NULL, NULL);
 ```
+
+### Single-client SPI1 TX admission
+
+`TryDmaTransmit(buffer, byte_count, end_callback, persistent_context)` is an
+opt-in, non-queuing path for SPI1 master, 8-bit, `TWO_LINES_TX_ONLY`, software NSS.
+The existing DMA APIs retain their scheduler and callback behavior when this
+mode is not used.
+
+Contract:
+
+- SPI1 is the only SPI DMA client, with one outstanding job. Only thread mode
+  submits or performs blocking commands; commands must wait for the preceding
+  DMA job's successful completion.
+- PRIMASK, BASEPRI and FAULTMASK must be clear when submitting. Both SPI1 and
+  DMA2 stream 3 NVIC lines must be enabled at the same encoded priority, below
+  audio. Use a priority grouping that actually permits audio to preempt them.
+  Configure priorities after SPI/system initialization, which sets defaults.
+- For example, with audio at preemption priority 0 and all priority bits used
+  for preemption:
+
+  ```cpp
+  HAL_NVIC_SetPriority(SPI1_IRQn, 1, 0);
+  HAL_NVIC_SetPriority(DMA2_Stream3_IRQn, 1, 0);
+  ```
+
+- Buffer length is 1..65535 bytes; lengths are rejected rather than narrowed.
+  The caller supplies DMA-accessible, correctly aligned/cache-managed memory,
+  keeps CS/DC stable, and retains the source until SPI EOT, not DMA TX complete.
+- Initialize the persistent callback context and the application's job ticket
+  before calling. Do not pass an address of a transient stack-local job.
+  Callbacks only publish flags/timestamps; they never chain transfers, operate
+  GPIO, call LVGL, or run recovery.
+- `ERR` with no callback means rejected admission: invalid parameters,
+  context/configuration, busy/not-ready hardware, disabled/mismatched IRQs, or
+  an existing terminal failure. No pointer is acquired and nothing is queued.
+- An admitted HAL initialization/start failure calls `end_callback(context,
+  ERR)` in thread mode before returning `ERR`. An admitted successful start
+  returns `OK`, but its interrupt callback may happen before that return.
+  Handle that race by preparing ownership before submission, not afterwards.
+- DMA2 stream 3 completion only arms SPI EOT. DMA errors are latched and pend
+  SPI1; normal/error interrupt callbacks are published from SPI1. Error wins
+  over simultaneous DMA completion. Each admitted job publishes at most once.
+- On admitted error, the job is terminal, both owned IRQs remain disabled, and
+  the callback/context are detached before publication. No late completion can
+  publish again or authorize reuse. `CheckError()` retains HAL-compatible
+  SPI/DMA error bits. This is not a reusable abort or a guarantee the DMA engine
+  is quiescent: retain source/context and enter a non-returning fault path.
+- Missing completion needs an application foreground timer deadline. On timeout,
+  disable the owned IRQs, retain the source/context, and do not return/reuse it.
+  Do not call HAL abort/reinitialization from an IRQ or with SysTick masked.
+- The first admission selects this mode until system reset. `Init` and legacy
+  DMA calls on this handle then reject; do not start other SPI DMA clients.
+
+Serialization and timing qualification:
+
+Admission masks only SPI1 and DMA2 stream 3 NVIC lines, preserving their enable
+states on rejection/success. DMA is restored before SPI1: a pending SPI1 fault
+can disable both without the restore path subsequently re-enabling DMA.
+An error arriving during admission's enable-state snapshot suppresses restoration
+of either line, even if the snapshot observed an enabled line before the error.
+Audio and SysTick remain unmasked. `HAL_DMA_Init` and `HAL_SPI_Transmit_DMA` run
+only here, in thread mode; any HAL tick-timeout polling therefore has an
+advancing SysTick. Readiness/stream-busy checks reject rather than spin.
+
+The opt-in IRQ handlers perform fixed register/state operations, without HAL
+dispatch, loops, global interrupt masks, initialization, polling, queue restart,
+or callback chaining. Equal SPI/DMA NVIC priorities prevent mutual preemption;
+the foreground masks both before accessing job ownership. Audio must not access
+this SPI/job state. These are synchronization preconditions, not assumptions
+that a host state-machine test can establish.
+
+`SpiDmaTxJob_gtest` covers admission rejection, EOT ownership, immediate failure,
+duplicate/late notification suppression, DMA error precedence and successive
+context ownership; `IrqObserver_gtest` covers observer dispatch. Neither host
+tests nor cross-compilation establish hardware timing or IRQ/vector coverage.
+Actual interrupt duration, audio preemption, missing-completion/error injection,
+CS/EOT behavior and masked-time measurements require integrated hardware
+qualification. No hardware timing bound is claimed by this API.

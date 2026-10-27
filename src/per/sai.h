@@ -4,6 +4,7 @@
 
 #include "util/hal_map.h"
 #include "daisy_core.h"
+#include "per/irq_observer.h"
 
 namespace daisy
 {
@@ -139,6 +140,15 @@ class SaiHandle
 
     /** Stops the DMA stream for the SAI blocks in use. */
     Result StopDma();
+
+    /** Observe SAI1 A/B DMA IRQ entry/exit. One observer covers both handlers.
+     *  Register before starting audio, with neither IRQ pending or executing.
+     *  To replace or remove it, stop DMA and ensure the same IRQ quiescence.
+     *  Callback/context must outlive registration. nullptr disables observation.
+     *  With no observer, HAL dispatch is unchanged and no snapshots are read.
+     *  Registration and observation add no interrupt masking or allocation.
+     */
+    static void SetIrqObserver(IrqObserverCallback callback, void* context);
 
     /** Returns the samplerate based on the current configuration */
     float GetSampleRate();

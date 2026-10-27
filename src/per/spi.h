@@ -3,6 +3,7 @@
 #define DSY_SPI_H
 
 #include "daisy_core.h"
+#include "per/irq_observer.h"
 
 #if !UNIT_TEST
 #include "util/hal_map.h"
@@ -131,6 +132,17 @@ class SpiHandle
     /** Returns the current config. */
     const Config& GetConfig() const;
 
+    /** Observe SPI1 and the shared DMA2 stream 3 TX IRQ entry/exit.
+     *  Register before starting transfers, with neither IRQ pending or executing.
+     *  To replace or remove it, first quiesce transfers and these IRQs.
+     *  Callback/context must outlive registration. nullptr disables observation.
+     *  With no observer, HAL dispatch is unchanged and no snapshots are read.
+     *  Observers run outside the driver's existing DMA dispatch interrupt mask;
+     *  no additional interrupt masking or allocation is introduced.
+     *  RX DMA2 stream 2 and other SPI peripheral IRQs are not observed.
+     */
+    static void SetIrqObserver(IrqObserverCallback callback, void* context);
+
     /** A callback to be executed right before a dma transfer is started. */
     typedef void (*StartCallbackFunctionPtr)(void* context);
     /** A callback to be executed after a dma transfer is completed. */
@@ -180,6 +192,35 @@ class SpiHandle
                        SpiHandle::StartCallbackFunctionPtr start_callback,
                        SpiHandle::EndCallbackFunctionPtr   end_callback,
                        void*                               callback_context);
+
+    /** Single-client, non-queuing SPI1 master / 8-bit / TX-only / software NSS DMA.
+     *  Call only from thread mode with PRIMASK, BASEPRI and FAULTMASK clear.
+     *  SPI1 and DMA2 stream 3 must be enabled at the same nonzero NVIC priority; use
+     *  a priority below audio. No other SPI DMA client may run until reset.
+     *  First admission opts this handle into this mode until system reset;
+     *  do not mix it with Init or the legacy DMA APIs afterwards.
+     *
+     *  Rejects busy/not-ready, invalid buffer/length (1..65535 bytes),
+     *  configuration and context violations with ERR and no callback.
+     *  Never queues or waits for SPI readiness. DMA initialization may use
+     *  HAL tick timeouts in thread mode; only these two NVIC lines are masked.
+     *
+     *  Initialize persistent callback context before calling. An admitted
+     *  start failure publishes ERR before returning ERR. An admitted success
+     *  returns OK; its callback can also occur before this function returns.
+     *  Normal/error IRQ publication is on SPI1, at most once per admission.
+     *  DMA TX complete only arms SPI EOT: retain buffer and CS/DC until EOT.
+     *
+     *  Callbacks must only publish flags/timestamps, never submit transfers.
+     *  On error both owned IRQs stay disabled, and subsequent submissions fail.
+     *  There is no recovery or proof of DMA quiescence: retain buffer/context
+     *  and enter a non-returning fault path. Use a foreground deadline for a
+     *  missing completion; never reuse an errored or timed-out source.
+     */
+    Result TryDmaTransmit(uint8_t*                          buff,
+                          size_t                            size,
+                          SpiHandle::EndCallbackFunctionPtr end_callback,
+                          void*                             callback_context);
 
     /** DMA-based receive
     \param *buff input buffer
